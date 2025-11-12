@@ -70,7 +70,6 @@
 
     const initialState = {
     user: null,
-    token: null,
     loading: false,
     error: null,
     success: false,
@@ -85,9 +84,8 @@
         clearError(state) { state.error = null; },
         resetAuth(state) { Object.assign(state, initialState); },
         setAuth(state, action) { // manual setter (useful on app startup)
-        const { user, token } = action.payload || {};
+        const { user } = action.payload || {};
         state.user = user ?? null;
-        state.token = token ?? null;
         state.isAuthenticated = !!(user || token);
         },
     },

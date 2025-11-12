@@ -3,6 +3,9 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, clearError } from '../features/authSlice';
 import { useNavigate } from 'react-router-dom';
+  import { Eye, EyeOff } from "lucide-react"; 
+
+
 
 export default function LoginForm() {   
   const dispatch = useDispatch();
@@ -10,6 +13,9 @@ export default function LoginForm() {
   const { loading, error, isAuthenticated } = useSelector((s) => s.auth);
 
   const [form, setForm] = useState({ email: '', password: '' });
+const [showPassword, setShowPassword] = useState(false);
+
+  const togglePassword = () => setShowPassword(!showPassword);
 
   useEffect(() => {
     if (isAuthenticated) navigate('/dashboard', { replace: true });
@@ -51,17 +57,26 @@ export default function LoginForm() {
             />
           </div>
 
-          <div>
-            <label className="block text-sm font-medium">Password</label>
-            <input
-              name="password"
-              value={form.password}
-              onChange={handleChange}
-              type="password"
-              className="mt-1 block w-full rounded-md border border-gray-300 p-2 focus:ring-[#00BFB6] focus:border-[#00BFB6]"
-              required
-            />
-          </div>
+         <div className="relative">
+      <label className="block text-sm font-medium">Password</label>
+      <input
+        name="password"
+        value={form.password}
+        onChange={handleChange}
+        type={showPassword ? "text" : "password"}
+        className="mt-1 block w-full rounded-md border border-gray-300 p-2 pr-10 focus:ring-[#00BFB6] focus:border-[#00BFB6]"
+        required
+      />
+
+      {/* Eye icon */}
+      <button
+        type="button"
+        onClick={togglePassword}
+        className="absolute right-3 top-[35px] text-gray-500 hover:text-[#00BFB6]"
+      >
+        {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+      </button>
+    </div>
 
           {error && <p className="text-red-600 text-sm">{typeof error === 'string' ? error : error.message || 'Login failed'}</p>}
 

@@ -3,6 +3,9 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { register, clearError } from '../features/authSlice';
 import { useNavigate } from 'react-router-dom';
+import { Eye, EyeOff } from "lucide-react"; 
+
+
 
 // Simple email regex for basic client-side check
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -26,6 +29,11 @@ export default function AdminRegisterForm() {
   const [validationErrors, setValidationErrors] = useState({});
   const [showSuccess, setShowSuccess] = useState(false);
   const [autoRedirectTimer, setAutoRedirectTimer] = useState(null);
+const [showPassword, setShowPassword] = useState(false);
+
+  const togglePassword = () => setShowPassword(!showPassword);
+
+
 
   useEffect(() => {
     // If user becomes authenticated (e.g. via login), go to dashboard
@@ -144,11 +152,26 @@ export default function AdminRegisterForm() {
           </div>
 
           {/* Password Field */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Password</label>
-            <input name="password" value={form.password} onChange={handleChange} type="password" className={getInputFieldClasses('password')} required />
-            {validationErrors.password && <p className="text-red-500 text-xs mt-1">{validationErrors.password}</p>}
-          </div>
+         <div className="relative">
+               <label className="block text-sm font-medium">Password</label>
+               <input
+                 name="password"
+                 value={form.password}
+                 onChange={handleChange}
+                 type={showPassword ? "text" : "password"}
+                 className="mt-1 block w-full rounded-md border border-gray-300 p-2 pr-10 focus:ring-[#00BFB6] focus:border-[#00BFB6]"
+                 required
+               />
+         
+               {/* Eye icon */}
+               <button
+                 type="button"
+                 onClick={togglePassword}
+                 className="absolute right-3 top-[35px] text-gray-500 hover:text-[#00BFB6]"
+               >
+                 {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+               </button>
+             </div>
 
           {/* Role Field */}
           <div>

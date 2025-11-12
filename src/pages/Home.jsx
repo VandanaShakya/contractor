@@ -38,6 +38,13 @@ const slideInRight = {
 
 // --- Component ---
 const Home = () => {
+
+
+    const altImages = [
+    images.homeFeature1,
+    images.homeFeature2,
+  ];
+
   return (
     <>
       {/* Fixed background image using an <img> tag */}
@@ -385,99 +392,136 @@ const Home = () => {
       </div>
 
       {/* creation */}
-      <div className="relative py-16 px-4 lg:px-8 bg-white">
-        <section className="py-12 bg-white">
-          <div className="container mx-auto px-4 max-w-7xl">
-            {/* Header Section */}
-            <div className="text-center mb-12 md:mb-16">
-              <motion.p initial="hidden" whileInView="show" viewport={{ once: true }} variants={fadeUp} className="text-sm uppercase tracking-widest font-medium text-[#00BFB6] mb-2">
-                <span className="inline-block w-2 h-2 bg-[#00BFB6] rounded-full mr-2"></span>
-                WHY CHOOSE US?
-              </motion.p>
-              <motion.h1 initial="hidden" whileInView="show" viewport={{ once: true }} variants={heroVariants} className="text-3xl md:text-5xl font-extrabold text-gray-900 mb-4 leading-snug">
-                Why we're your best choice
-              </motion.h1>
-              <p className="text-base md:text-lg text-gray-500 max-w-3xl mx-auto">
-                Developed in close collaboration with our partners and clients,
-                combines industry knowledge, decades of experience, ingenuity and
-                adaptability to deliver excellence to our clients.
-              </p>
-            </div>
-
-            {/* Grid Section (first occurrence) */}
-            <motion.div className="grid grid-cols-1 gap-8 items-stretch lg:grid-cols-3" initial="hidden" whileInView="show" viewport={{ once: true, amount: 0.2 }} variants={staggerContainer}>
-              {featuresData.map((item, idx) => (
-                <motion.div key={idx} className={`flex justify-center items-center ${item.className}`} variants={cardVariants} custom={idx}>
-                  {item.type === "card" ? (
-                    <div className="bg-white p-6 md:p-10 rounded-xl shadow-lg border border-gray-100 flex flex-col justify-between h-full w-full">
-                      {/* Icon + Title */}
-                      <div className="mb-6">
-                        {typeof item.icon === "function" ? (
-                          <item.icon size={28} color={ICON_COLOR} className="mb-2" />
-                        ) : (
-                          item.icon
-                        )}
-                        <h3 className="text-xl md:text-2xl font-semibold text-gray-800">
-                          {item.title}
-                        </h3>
-                      </div>
-
-                      {/* Description */}
-                      <p className="text-gray-600 mb-8 flex-grow">{item.description}</p>
-
-                      {/* Metric */}
-                      <div>
-                        <div className="text-4xl md:text-5xl font-bold text-[#00BFB6] mb-1">{item.metric}</div>
-                        <p className="text-gray-500">{item.metricLabel}</p>
-                      </div>
-                    </div>
-                  ) : (
-                    <div className="rounded-xl shadow-2xl overflow-hidden transform transition-transform duration-300 hover:scale-[1.01] w-full max-w-lg lg:max-w-none">
-                      <motion.img src={item.image} alt={item.title} className="w-full object-cover" style={{ minHeight: "400px", maxHeight: "550px" }} initial={{ opacity: 0, scale: 1.03 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.6 }} />
-                    </div>
-                  )}
-                </motion.div>
-              ))}
-            </motion.div>
+        <div className="relative py-16 px-4 lg:px-8 bg-white">
+      <section className="py-12 bg-white">
+        <div className="container mx-auto px-4 max-w-7xl">
+          {/* Header Section */}
+          <div className="text-center mb-12 md:mb-16">
+            <motion.p
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true }}
+              variants={fadeUp}
+              className="text-sm uppercase tracking-widest font-medium text-[#00BFB6] mb-2"
+            >
+              <span className="inline-block w-2 h-2 bg-[#00BFB6] rounded-full mr-2"></span>
+              WHY CHOOSE US?
+            </motion.p>
+            <motion.h1
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true }}
+              variants={heroVariants}
+              className="text-3xl md:text-5xl font-extrabold text-gray-900 mb-4 leading-snug"
+            >
+              Why we're your best choice
+            </motion.h1>
+            <p className="text-base md:text-lg text-gray-500 max-w-3xl mx-auto">
+              Developed in close collaboration with our partners and clients,
+              combines industry knowledge, decades of experience, ingenuity and
+              adaptability to deliver excellence to our clients.
+            </p>
           </div>
 
-          <div className="container mx-auto mt-5 px-4 max-w-7xl">
-            {/* Grid Section (duplicate occurrence — preserved as requested) */}
-            <div className="grid grid-cols-1 gap-8 items-stretch lg:grid-cols-3">
-              {featuresData.map((item, idx) => (
-                <div key={idx} className={`flex justify-center items-center ${item.className}`}>
-                  {item.type === "card" ? (
-                    <div className="bg-white p-6 md:p-10 rounded-xl shadow-lg border border-gray-100 flex flex-col justify-between h-full w-full">
-                      {/* Icon + Title */}
-                      <div className="mb-6">
-                        {typeof item.icon === "function" ? (
-                          <item.icon size={28} color={ICON_COLOR} className="mb-2" />
-                        ) : (
-                          item.icon
-                        )}
-                        <h3 className="text-xl md:text-2xl font-semibold text-gray-800">{item.title}</h3>
-                      </div>
-
-                      {/* Description */}
-                      <p className="text-gray-600 mb-8 flex-grow">{item.description}</p>
-
-                      {/* Metric */}
-                      <div>
-                        <div className="text-4xl md:text-5xl font-bold text-[#00BFB6] mb-1">{item.metric}</div>
-                        <p className="text-gray-500">{item.metricLabel}</p>
-                      </div>
+          {/* ✅ FIRST GRID (Original images with motion) */}
+          <motion.div
+            className="grid grid-cols-1 gap-8 items-stretch lg:grid-cols-3"
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={staggerContainer}
+          >
+            {featuresData.map((item, idx) => (
+              <motion.div
+                key={idx}
+                className={`flex justify-center items-center ${item.className}`}
+                variants={cardVariants}
+                custom={idx}
+              >
+                {item.type === "card" ? (
+                  <div className="bg-white p-6 md:p-10 rounded-xl shadow-lg border border-gray-100 flex flex-col justify-between h-full w-full">
+                    <div className="mb-6">
+                      {typeof item.icon === "function" ? (
+                        <item.icon size={28} color={ICON_COLOR} className="mb-2" />
+                      ) : (
+                        item.icon
+                      )}
+                      <h3 className="text-xl md:text-2xl font-semibold text-gray-800">
+                        {item.title}
+                      </h3>
                     </div>
-                  ) : (
-                    <div className="rounded-xl shadow-2xl overflow-hidden transform transition-transform duration-300 hover:scale-[1.01] w-full max-w-lg lg:max-w-none">
-                      <img src={item.image} alt={item.title} className="w-full object-cover" style={{ minHeight: "400px", maxHeight: "550px" }} />
+                    <p className="text-gray-600 mb-8 flex-grow">{item.description}</p>
+                    <div>
+                      <div className="text-4xl md:text-5xl font-bold text-[#00BFB6] mb-1">
+                        {item.metric}
+                      </div>
+                      <p className="text-gray-500">{item.metricLabel}</p>
                     </div>
-                  )}
-                </div>
-              ))}
-            </div>
+                  </div>
+                ) : (
+                  <div className="rounded-xl shadow-2xl overflow-hidden transform transition-transform duration-300 hover:scale-[1.01] w-full max-w-lg lg:max-w-none">
+                    <motion.img
+                      src={item.image}
+                      alt={item.title}
+                      className="w-full object-cover"
+                      style={{ minHeight: "400px", maxHeight: "550px" }}
+                      initial={{ opacity: 0, scale: 1.03 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      viewport={{ once: true, amount: 0.2 }}
+                      transition={{ duration: 0.6 }}
+                    />
+                  </div>
+                )}
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
+
+        {/* ✅ SECOND GRID (Same layout but with alternate images) */}
+        <div className="container mx-auto mt-5 px-4 max-w-7xl">
+          <div className="grid grid-cols-1 gap-8 items-stretch lg:grid-cols-3">
+            {featuresData.map((item, idx) => (
+              <div
+                key={idx}
+                className={`flex justify-center items-center ${item.className}`}
+              >
+                {item.type === "card" ? (
+                  <div className="bg-white p-6 md:p-10 rounded-xl shadow-lg border border-gray-100 flex flex-col justify-between h-full w-full">
+                    <div className="mb-6">
+                      {typeof item.icon === "function" ? (
+                        <item.icon size={28} color={ICON_COLOR} className="mb-2" />
+                      ) : (
+                        item.icon
+                      )}
+                      <h3 className="text-xl md:text-2xl font-semibold text-gray-800">
+                        {item.title}
+                      </h3>
+                    </div>
+                    <p className="text-gray-600 mb-8 flex-grow">{item.description}</p>
+                    <div>
+                      <div className="text-4xl md:text-5xl font-bold text-[#00BFB6] mb-1">
+                        {item.metric}
+                      </div>
+                      <p className="text-gray-500">{item.metricLabel}</p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="rounded-xl shadow-2xl overflow-hidden transform transition-transform duration-300 hover:scale-[1.01] w-full max-w-lg lg:max-w-none">
+                    {/* 👇 Different image for same item */}
+                    <img
+                      src={altImages[idx] ?? item.image}
+                      alt={item.title}
+                      className="w-full object-cover"
+                      style={{ minHeight: "400px", maxHeight: "550px" }}
+                    />
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
+    </div>
     </>
   );
 };

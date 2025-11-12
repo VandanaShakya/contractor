@@ -24,13 +24,14 @@ export default function LoginForm() {
     try {
       const resultAction = await dispatch(login(form));
       if (login.fulfilled.match(resultAction)) {
-        navigate('/dashboard', { replace: true });
+        navigate('/', { replace: true });
       } else {
         console.error('Login failed', resultAction);
       }
     } catch (err) {
       console.error(err);
     }
+    redirect("/")
   };
 
   return (

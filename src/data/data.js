@@ -60,12 +60,15 @@ export const featuresData = [
     className: "order-1 lg:order-1",
   },
   {
-    type: "image",
-    title: "Construction Image",
-    image:
-      images.homeFeature1,
-    className: "order-3 lg:order-2",
-  },
+  type: "image",
+  title: "Construction Image",
+  image: images.homeFeature1, 
+  altImages: [                
+    
+    images.homeFeature2,
+  ],
+  className: "order-3 lg:order-2",
+},
   {
     type: "card",
     title: "Quality Craftsmanship",
@@ -307,6 +310,30 @@ export const testimonials = [
     heading: "Success Driven Process.",
     description: "Our mission is your successful settlement. We leverage our extensive experience to navigate complex legal frameworks, ensuring the highest chance of approval for your application.",
     imageSrc: images.testimonial3,
+    altText: "Image symbolizing success and achievement.",
+    services: [
+      { name: "High Approval Rate", icon: CheckCircle },
+      { name: "Post-Arrival Support", icon: CheckCircle },
+      { name: "Expert Legal Review", icon: CheckCircle },
+    ],
+    bgColor: "bg-white",
+  },
+  {
+    heading: "Success Driven Process.",
+    description: "Our mission is your successful settlement. We leverage our extensive experience to navigate complex legal frameworks, ensuring the highest chance of approval for your application.",
+    imageSrc: images.testimonial4,
+    altText: "Image symbolizing success and achievement.",
+    services: [
+      { name: "High Approval Rate", icon: CheckCircle },
+      { name: "Post-Arrival Support", icon: CheckCircle },
+      { name: "Expert Legal Review", icon: CheckCircle },
+    ],
+    bgColor: "bg-white",
+  },
+  {
+    heading: "Success Driven Process.",
+    description: "Our mission is your successful settlement. We leverage our extensive experience to navigate complex legal frameworks, ensuring the highest chance of approval for your application.",
+    imageSrc: images.testimonial5,
     altText: "Image symbolizing success and achievement.",
     services: [
       { name: "High Approval Rate", icon: CheckCircle },

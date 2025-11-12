@@ -55,116 +55,110 @@ const Help = () => {
     </div>
 
 
-      <div className=" bg-white">
-      <div className="relative h-[26rem] md:h-[28rem] lg:h-[32rem] overflow-hidden">
-       
-        {/* overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/20" />
+     <div className="bg-white">
+  <div className="relative h-[26rem] md:h-[28rem] lg:h-[32rem] overflow-hidden flex items-center">
+    {/* Content */}
+    <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 h-full flex items-center">
+      <div className="w-full">
+        <div className="max-w-3xl">
+          <p className="text-sm tracking-widest uppercase text-gray-500 mb-2">
+            Welcome to Support
+          </p>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-light text-black leading-tight mb-4">
+            Search for the solution
+          </h1>
+          <p className="text-gray-600 mb-6 max-w-2xl">
+            Find manuals, drivers, FAQs and self-help resources. If you still need help, contact our support team.
+          </p>
 
-        {/* Content */}
-        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 h-full flex items-center">
-          <div className="w-full">
-            <div className="max-w-3xl">
-              <p className="text-sm tracking-widest uppercase text-white/90 mb-2">
-                Welcome to Support
-              </p>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-light text-white leading-tight mb-4">
-                Search for the solution
-              </h1>
-              <p className="text-white/90 mb-6 max-w-2xl">
-                Find manuals, drivers, FAQs and self-help resources. If you
-                still need help, contact our support team.
-              </p>
-
-              {/* Search bar */}
-              <div className="bg-white rounded-lg shadow-lg w-full max-w-2xl">
-                <div className="flex items-center p-3">
-                  <svg
-                    className="w-5 h-5 text-[#00BFB6] mr-3"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                    />
-                  </svg>
-                  <input
-                    type="text"
-                    placeholder="Please describe your problem"
-                    className="w-full text-gray-700 placeholder-gray-400 focus:outline-none"
-                  />
-                  <button className="ml-3 bg-[#00BFB6] hover:bg-[#03a69e] text-white px-4 py-2 rounded-md transition">
-                    Search
-                  </button>
-                </div>
-              </div>
-
-              <p className="mt-4 text-sm text-white/80">
-                Need to check a previous case?{" "}
-                <a href="#" className="text-[#00BFB6] underline font-medium">
-                  Check your case
-                </a>
-              </p>
-            </div>
-          </div>
-
-          {/* Right image (optional) */}
-          <div className="hidden xl:flex ml-auto items-end">
-            <div className="w-[100%] h-[100%] rounded-l overflow-hidden transform translate-y-6 drop-shadow-2xl">
-              <img
-                src={images.helpRightImage}
-                alt="agent"
-                className="w-full h-full object-cover"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* --------------------- SERVICES ICONS --------------------- */}
-      <div className="py-10 bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            {helpServices.map((s, idx) => (
-              <a
-                key={idx}
-                href="#"
-                className="flex flex-col items-center p-6 hover:bg-[#00BFB6]/5 rounded-lg transition"
+          {/* Search bar */}
+          <div className="bg-white rounded-lg shadow-lg w-full max-w-2xl border border-gray-200">
+            <div className="flex items-center p-3">
+              <svg
+                className="w-5 h-5 text-[#00BFB6] mr-3"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
               >
-                <div className="p-4 rounded-full border border-[#00BFB6]/30 mb-3">
-                  <svg
-                    className="w-8 h-8 text-[#00BFB6]"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="1.5"
-                      d={s.iconPath}
-                    />
-                  </svg>
-                </div>
-                <span className="text-sm font-medium text-gray-700 text-center">
-                  {s.label}
-                </span>
-              </a>
-            ))}
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+              <input
+                type="text"
+                placeholder="Please describe your problem"
+                className="w-full text-gray-700 placeholder-gray-400 focus:outline-none"
+              />
+              <button className="ml-3 bg-[#00BFB6] hover:bg-[#03a69e] text-white px-4 py-2 rounded-md transition">
+                Search
+              </button>
+            </div>
           </div>
+
+          <p className="mt-4 text-sm text-gray-600">
+            Need to check a previous case?{" "}
+            <a href="#" className="text-[#00BFB6] underline font-medium">
+              Check your case
+            </a>
+          </p>
         </div>
       </div>
 
-    
+      {/* Right image (optional) */}
+      <div className="hidden xl:flex ml-auto items-end">
+        <div className="w-[100%] h-[100%] rounded-l overflow-hidden transform translate-y-6 drop-shadow-2xl">
+          <img
+            src={images.helpRightImage}
+            alt="agent"
+            className="w-full h-full object-cover"
+          />
+        </div>
+      </div>
     </div>
+  </div>
+
+  {/* --------------------- SERVICES ICONS --------------------- */}
+  <div className="py-10 bg-white">
+    <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        {helpServices.map((s, idx) => (
+          <a
+            key={idx}
+            href="#"
+            className="flex flex-col items-center p-6 hover:bg-[#00BFB6]/5 rounded-lg transition"
+          >
+            <div className="p-4 rounded-full border border-[#00BFB6]/30 mb-3">
+              <svg
+                className="w-8 h-8 text-[#00BFB6]"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="1.5"
+                  d={s.iconPath}
+                />
+              </svg>
+            </div>
+            <span className="text-sm font-medium text-gray-700 text-center">
+              {s.label}
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
+
 
 
     {/* third section */}
-<div className="min-h-screen bg-gray-50 p-6 sm:p-10">
+<div className="bg-gray-50 p-6 sm:p-10">
       <div className="max-w-7xl mx-auto">
         {/* Main Grid Container - Fully Responsive */}
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">

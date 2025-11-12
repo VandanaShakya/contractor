@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { teamMembers, pricingPlans, testimonials } from "../data/data";
 import { Facebook, Instagram, Linkedin } from "lucide-react";
@@ -7,8 +7,48 @@ import images from "../assets/images";
 const PRIMARY_COLOR = "#00BFB6";
 
 const About = () => {
-  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
-  const currentSlide = testimonials[currentSlideIndex];
+ const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+const touchStartX = useRef(null);
+const AUTOPLAY_DELAY = 4000;
+const SWIPE_THRESHOLD = 50;
+
+// safe guard
+const slidesCount = Array.isArray(testimonials) ? testimonials.length : 0;
+const currentSlide = slidesCount ? testimonials[currentSlideIndex % slidesCount] : {
+  imageSrc: "",
+  altText: "",
+  heading: "",
+  description: "",
+  services: [],
+  bgColor: "",
+};
+
+// autoplay (robust)
+useEffect(() => {
+  if (!slidesCount) return undefined;
+  const id = setInterval(() => {
+    setCurrentSlideIndex((p) => (p + 1) % slidesCount);
+  }, AUTOPLAY_DELAY);
+  return () => clearInterval(id);
+}, [slidesCount]);
+
+// swipe handlers (unchanged logic)
+const handleTouchStart = (e) => {
+  touchStartX.current = e.touches?.[0]?.clientX ?? null;
+};
+
+const handleTouchEnd = (e) => {
+  if (!touchStartX.current) return;
+  const diff = touchStartX.current - e.changedTouches[0].clientX;
+  if (diff > SWIPE_THRESHOLD) {
+    // next
+    setCurrentSlideIndex((p) => (p + 1) % slidesCount);
+  } else if (diff < -SWIPE_THRESHOLD) {
+    // prev (safe wrap)
+    setCurrentSlideIndex((p) => (p - 1 + slidesCount) % slidesCount);
+  }
+  touchStartX.current = null;
+};
 
   return (
     <>
@@ -288,83 +328,90 @@ const About = () => {
       </motion.div>
 
       {/* TESTIMONIALS SECTION */}
-      <motion.section
-        className={`relative py-12 sm:py-16 md:py-24 px-4 sm:px-6 lg:px-8 ${currentSlide.bgColor} shadow-xl overflow-hidden`}
-        initial={{ opacity: 0, y: 18 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.7 }}
-      >
-        <div className="max-w-full sm:max-w-[90%] md:max-w-[68%] mx-auto">
-          <div className="flex flex-col md:flex-row items-center gap-6 sm:gap-10 lg:gap-20">
-            <div className="w-full md:w-1/2 rounded-xl overflow-hidden shadow-2xl">
-              <motion.img
-                key={currentSlideIndex}
-                src={currentSlide.imageSrc}
-                alt={currentSlide.altText}
-                className="w-full h-full object-cover min-h-[200px] sm:min-h-[300px] md:min-h-[500px]"
-                onError={(e) =>
-                  (e.target.src =
-                    "https://placehold.co/500x700/6A5ACD/ffffff?text=Image+Not+Found")
-                }
-                initial={{ opacity: 0, scale: 1.02 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-              />
-            </div>
+        <motion.section
+  className={`relative py-12 sm:py-16 md:py-24 px-4 sm:px-6 lg:px-8 ${currentSlide.bgColor} shadow-xl overflow-hidden`}
+  initial={{ opacity: 0, y: 18 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  viewport={{ once: true }}
+  transition={{ duration: 0.7 }}
+  onTouchStart={handleTouchStart}
+  onTouchEnd={handleTouchEnd}
+>
+  <div className="max-w-full sm:max-w-[90%] md:max-w-[68%] mx-auto">
+    <div className="flex flex-col md:flex-row items-center gap-6 sm:gap-10 lg:gap-20">
 
-            <div className="w-full md:w-1/2 py-4 sm:py-6">
-              <motion.div
-                key={currentSlideIndex + 1}
-                className="transition-opacity duration-700"
-                initial={{ opacity: 0, x: 12 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6 }}
-              >
-                <h1 className="text-2xl sm:text-4xl font-extrabold text-[#31395E] leading-tight mb-4 sm:mb-6">
-                  {currentSlide.heading}
-                </h1>
+      {/* IMAGE: use key so it remounts cleanly on slide change and animate explicitly */}
+      <div className="w-full md:w-1/2 rounded-xl overflow-hidden shadow-2xl">
+        <motion.img
+          key={`img-${currentSlideIndex}`}
+          src={currentSlide.imageSrc || ""}
+          alt={currentSlide.altText || ""}
+          className="w-full h-full object-cover min-h-[200px] sm:min-h-[300px] md:min-h-[500px]"
+          onError={(e) =>
+            (e.target.src =
+              "https://placehold.co/500x700/6A5ACD/ffffff?text=Image+Not+Found")
+          }
+          initial={{ opacity: 0, scale: 1.02 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.6 }}
+        />
+      </div>
 
-                <p className="text-sm sm:text-lg text-gray-600 mb-4 sm:mb-8 leading-relaxed">
-                  {currentSlide.description}
-                </p>
+      {/* TEXT: key + animate (no whileInView/once) */}
+      <div className="w-full md:w-1/2 py-4 sm:py-6">
+        <motion.div
+          key={`content-${currentSlideIndex}`}
+          className="transition-opacity duration-700"
+          initial={{ opacity: 0, x: 12 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -8 }}
+          transition={{ duration: 0.6 }}
+        >
+          <h1 className="text-2xl sm:text-4xl font-extrabold text-[#31395E] leading-tight mb-4 sm:mb-6">
+            {currentSlide.heading}
+          </h1>
 
-                <ul className="space-y-2 sm:space-y-4">
-                  {currentSlide.services.map((service, index) => (
-                    <li
-                      key={index}
-                      className="flex items-center text-sm sm:text-lg font-semibold text-gray-800"
-                    >
-                      <service.icon
-                        className="w-5 h-5 sm:w-6 sm:h-6 text-[#00BFA6] mr-2 sm:mr-3 flex-shrink-0"
-                        aria-hidden="true"
-                      />
-                      {service.name}
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
-            </div>
-          </div>
+          <p className="text-sm sm:text-lg text-gray-600 mb-4 sm:mb-8 leading-relaxed">
+            {currentSlide.description}
+          </p>
 
-          <div className="flex justify-center mt-4 sm:mt-8 space-x-2 sm:space-x-4 pt-2 sm:pt-4 border-t border-gray-100">
-            {testimonials.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentSlideIndex(index)}
-                className={`h-2 w-2 sm:h-3 sm:w-3 rounded-full transition-colors duration-300 ${
-                  index === currentSlideIndex
-                    ? "bg-[#00BFA6]"
-                    : "bg-gray-300 hover:bg-gray-400"
-                }`}
-                aria-label={`Go to slide ${index + 1}`}
-              />
-            ))}
-          </div>
-        </div>
-      </motion.section>
+          <ul className="space-y-2 sm:space-y-4">
+            {Array.isArray(currentSlide.services) &&
+              currentSlide.services.map((service, index) => (
+                <li
+                  key={index}
+                  className="flex items-center text-sm sm:text-lg font-semibold text-gray-800"
+                >
+                  <service.icon
+                    className="w-5 h-5 sm:w-6 sm:h-6 text-[#00BFA6] mr-2 sm:mr-3 flex-shrink-0"
+                    aria-hidden="true"
+                  />
+                  {service.name}
+                </li>
+              ))}
+          </ul>
+        </motion.div>
+      </div>
+    </div>
+
+    {/* Dots */}
+    <div className="flex justify-center mt-4 sm:mt-8 space-x-2 sm:space-x-4 pt-2 sm:pt-4 border-t border-gray-100">
+      {Array.isArray(testimonials) &&
+        testimonials.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => setCurrentSlideIndex(index)}
+            className={`h-2 w-2 sm:h-3 sm:w-3 rounded-full transition-colors duration-300 ${
+              index === currentSlideIndex ? "bg-[#00BFA6]" : "bg-gray-300 hover:bg-gray-400"
+            }`}
+            aria-label={`Go to slide ${index + 1}`}
+          />
+        ))}
+    </div>
+  </div>
+</motion.section>
+
     </>
   );
 };

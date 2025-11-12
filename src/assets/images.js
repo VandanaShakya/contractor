@@ -15,6 +15,8 @@ import aboutHeroImg from './about/about-img.png'
 import testimonial1 from './about/testimonial1.png'
 import testimonial2 from './about/testimonial2.avif'
 import testimonial3 from './about/testimonial3.png'
+import testimonial4 from './about/testimonial4.jpg'
+import testimonial5 from './about/testimonial5.jpg'
 
 
 // contact //
@@ -53,6 +55,8 @@ const images = {
     testimonial1,
     testimonial2,
     testimonial3,
+    testimonial4,
+    testimonial5,
 
     // contact //
     contactRightImage,

@@ -3,18 +3,15 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, clearError } from '../features/authSlice';
 import { useNavigate } from 'react-router-dom';
-  import { Eye, EyeOff } from "lucide-react"; 
+import { Eye, EyeOff } from "lucide-react";
 
-
-
-export default function LoginForm() {   
+export default function LoginForm() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { loading, error, isAuthenticated } = useSelector((s) => s.auth);
 
   const [form, setForm] = useState({ email: '', password: '' });
-const [showPassword, setShowPassword] = useState(false);
-
+  const [showPassword, setShowPassword] = useState(false);
   const togglePassword = () => setShowPassword(!showPassword);
 
   useEffect(() => {
@@ -27,17 +24,20 @@ const [showPassword, setShowPassword] = useState(false);
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.email || !form.password) return alert('Enter email & password');
+
     try {
       const resultAction = await dispatch(login(form));
+
       if (login.fulfilled.match(resultAction)) {
-        navigate('/', { replace: true });
+        // Thunk already persisted user to localStorage and emitted event
+        navigate('/admin-dashboard', { replace: true });
       } else {
+        // login rejected
         console.error('Login failed', resultAction);
       }
     } catch (err) {
       console.error(err);
     }
-    redirect("/")
   };
 
   return (
@@ -57,28 +57,31 @@ const [showPassword, setShowPassword] = useState(false);
             />
           </div>
 
-         <div className="relative">
-      <label className="block text-sm font-medium">Password</label>
-      <input
-        name="password"
-        value={form.password}
-        onChange={handleChange}
-        type={showPassword ? "text" : "password"}
-        className="mt-1 block w-full rounded-md border border-gray-300 p-2 pr-10 focus:ring-[#00BFB6] focus:border-[#00BFB6]"
-        required
-      />
+          <div className="relative">
+            <label className="block text-sm font-medium">Password</label>
+            <input
+              name="password"
+              value={form.password}
+              onChange={handleChange}
+              type={showPassword ? "text" : "password"}
+              className="mt-1 block w-full rounded-md border border-gray-300 p-2 pr-10 focus:ring-[#00BFB6] focus:border-[#00BFB6]"
+              required
+            />
 
-      {/* Eye icon */}
-      <button
-        type="button"
-        onClick={togglePassword}
-        className="absolute right-3 top-[35px] text-gray-500 hover:text-[#00BFB6]"
-      >
-        {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-      </button>
-    </div>
+            <button
+              type="button"
+              onClick={togglePassword}
+              className="absolute right-3 top-[35px] text-gray-500 hover:text-[#00BFB6]"
+            >
+              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+            </button>
+          </div>
 
-          {error && <p className="text-red-600 text-sm">{typeof error === 'string' ? error : error.message || 'Login failed'}</p>}
+          {error && (
+            <p className="text-red-600 text-sm">
+              {typeof error === 'string' ? error : error?.message || 'Login failed'}
+            </p>
+          )}
 
           <button
             type="submit"

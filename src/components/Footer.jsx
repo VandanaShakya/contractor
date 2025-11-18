@@ -58,7 +58,7 @@ const Footer = () => {
                 <span className="relative pb-0.5">
                   {link.name}
                   <span
-                    className="absolute bottom-0 left-0 h-[2px] w-0 transition-all duration-300 ease-in-out group-hover:w-full"
+                    className="absolute bottom-0 left-0 w-0 transition-all duration-300 ease-in-out group-hover:w-full"
                     style={{ backgroundColor: "#00BFB6" }}
                   ></span>
                 </span>
